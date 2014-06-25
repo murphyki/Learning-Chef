@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
+  
+  config.omnibus.chef_version = :latest
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "opscode-ubuntu-12.04-i386"
@@ -75,9 +77,10 @@ Vagrant.configure("2") do |config|
   # Enable provisioning with chef server, specifying the chef server URL,
   # and the path to the validation key (relative to this Vagrantfile).
   #
-  # config.vm.provision :chef_client do |chef|
-  #   chef.chef_server_url = "https://api.opscode.com/organizations/kieransorg"
-  #   chef.validation_client_name = "kieransorg-validator"
-  #   chef.validation_key_path = ".chef/kieransorg-validator.pem"
-  # end
+  config.vm.provision :chef_client do |chef|
+    chef.chef_server_url = "https://api.opscode.com/organizations/kieransorg"
+    chef.validation_client_name = "kieransorg-validator"
+    chef.validation_key_path = "./.chef/kieransorg-validator.pem"
+    chef.node_name = "kierans-vm"
+  end
 end
